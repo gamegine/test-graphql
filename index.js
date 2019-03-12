@@ -5,17 +5,22 @@ var { buildSchema } = require('graphql');
 var schema = buildSchema(`
   type Query {
     getUsers: [User!],
-    getUser(n:Int!): User!
+    getUser(name:String!): User,
+    setUser(name:String!):User
   }
   type User {
       name:String!,
       addr:String,
       tel:Int
   }
-`);
+`);//
 var root = {
-    getUsers: () =>  {return Users},
-    getUser: ({n}) =>  {return Users[n]}
+    getUsers: () => Users,
+    getUser:({name})=>Users.filter(word => word.name==name)[0],
+    setUser: ({name}) =>  {
+        Users.push(new User(name))
+        return Users[User.length-1]
+    }
 };
 class User{
     constructor(name) {
@@ -24,7 +29,9 @@ class User{
     this.tel=12;
     }
 }
-let Users=[new User("toto"),new User("totos")]
+
+let Users=[new User("a")]
+
 var app = express();
 app.use('/', graphqlHTTP({schema: schema,rootValue: root,graphiql: true}));
 app.listen(3000);
