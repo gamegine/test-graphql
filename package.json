@@ -1,0 +1,28 @@
+{
+  "name": "graphqlapi",
+  "version": "1.0.0",
+  "description": "graphql api",
+  "main": "index.js",
+  "scripts": {
+    "test": "graphql"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gamgine/graphql.git"
+  },
+  "keywords": [
+    "graphql",
+    "api"
+  ],
+  "author": "gamegine",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gamgine/graphql/issues"
+  },
+  "homepage": "https://github.com/gamgine/graphql#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "express-graphql": "^0.7.1",
+    "graphql": "^14.1.1"
+  }
+}
