@@ -6,7 +6,9 @@ var schema = buildSchema(`
   type Query {
     getUsers: [User!],
     getUser(name:String!): User,
-    setUser(name:String!):User
+  }
+  type Mutation{
+    insUser(name:String!):User
   }
   type User {
       name:String!,
@@ -17,9 +19,9 @@ var schema = buildSchema(`
 var root = {
     getUsers: () => Users,
     getUser:({name})=>Users.filter(word => word.name==name)[0],
-    setUser: ({name}) =>  {
-        Users.push(new User(name))
-        return Users[User.length-1]
+    insUser: ({name}) =>  {
+        if(Users.filter(word => word.name==name).length==0){Users.push(new User(name))}
+        return Users.filter(word => word.name==name)[0]
     }
 };
 class User{
