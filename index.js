@@ -9,19 +9,24 @@ var schema = buildSchema(`
   }
   type Mutation{
     insUser(name:String!):User
+    updUser(name:String!,e:String!,val:String):User
   }
   type User {
       name:String!,
       addr:String,
       tel:Int
   }
-`);//
+`);
 var root = {
     getUsers: () => Users,
     getUser:({name})=>Users.filter(word => word.name==name)[0],
     insUser: ({name}) =>  {
         if(Users.filter(word => word.name==name).length==0){Users.push(new User(name))}
         return Users.filter(word => word.name==name)[0]
+    },
+    updUser: ({name,e,val}) =>  {console.log(name,e,val)
+        Users.filter(word => word.name==name)[0][name]=val
+        return new User("tmp")
     }
 };
 class User{
@@ -33,7 +38,6 @@ class User{
 }
 
 let Users=[new User("a")]
-
 var app = express();
 app.use('/', graphqlHTTP({schema: schema,rootValue: root,graphiql: true}));
 app.listen(3000);
